@@ -1,0 +1,4 @@
+apiVersion: v2
+name: helm-sonarqube
+description: Installs SonarQube code quality and security analysis platform Helm chart.
+version: 0.0.1

@@ -1,0 +1,18 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: helm-sonarqube
+spec:
+  package: ghcr.io/hops-ops/helm-sonarqube:{{ .Values.version }}
+{{- if .Values.skipDependencyResolution }}
+  skipDependencyResolution: true
+{{- end }}
+{{- if .Values.skipDependencyResolution }}
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: Function
+metadata:
+  name: hops-ops-helm-sonarquberender
+spec:
+  package: ghcr.io/hops-ops/helm-sonarqube-render:{{ .Values.version }}
+{{- end }}

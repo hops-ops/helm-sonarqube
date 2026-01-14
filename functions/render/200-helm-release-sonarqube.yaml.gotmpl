@@ -1,0 +1,23 @@
+{{- $state := get $ "$state" }}
+{{- $sq := $state.sonarqube }}
+---
+apiVersion: helm.m.crossplane.io/v1beta1
+kind: Release
+metadata:
+  name: {{ $sq.releaseName }}
+  annotations:
+    {{ setResourceNameAnnotation "helm-release-sonarqube" }}
+  labels: {{ $sq.labels | toJson }}
+spec:
+  forProvider:
+    chart:
+      name: sonarqube
+      repository: https://SonarSource.github.io/helm-chart-sonarqube
+      version: 10.8.1
+    namespace: {{ $sq.namespace }}
+    values: {{ $sq.values | toJson }}
+  managementPolicies: {{ $sq.managementPolicies | toJson }}
+  providerConfigRef:
+    name: {{ $sq.providerConfigRef.name }}
+    kind: {{ $sq.providerConfigRef.kind }}
+  rollbackLimit: 3
